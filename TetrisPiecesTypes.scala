@@ -1,15 +1,10 @@
 package ByteToTetrisPieces
 
-object TetrisPieces extends Enumeration {
+object TetrisPiecesTypes extends Enumeration {
 
   val NONE, S, Z, T, L, L_REVERSED, SQUARE, I = Value
 
-  // TODO Possible to have different size ?
-
-  /*
-  Get the representation of the TetrisPiece as a 2 x 4 Array of Boolean
-   */
-  def getRepresentation(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
+  def getRepresentation(tetrisPiece: TetrisPiecesTypes.Value): Array[Array[Boolean]] = {
     tetrisPiece match {
 
       /*
@@ -104,80 +99,50 @@ object TetrisPieces extends Enumeration {
   /*
   Get the Byte representation of the TetrisPiece
    */
-  def getByte (tetrisPieces: TetrisPieces.Value): Byte = {
+  def getByte (tetrisPieces: TetrisPiecesTypes.Value): Byte = {
     tetrisPieces match {
-      case TetrisPieces.NONE        => 0.toByte
-      case TetrisPieces.S           => 1.toByte
-      case TetrisPieces.Z           => 2.toByte
-      case TetrisPieces.T           => 3.toByte
-      case TetrisPieces.L           => 4.toByte
-      case TetrisPieces.L_REVERSED  => 5.toByte
-      case TetrisPieces.SQUARE      => 6.toByte
-      case TetrisPieces.I           => 7.toByte
+      case TetrisPiecesTypes.NONE        => 0.toByte
+      case TetrisPiecesTypes.S           => 1.toByte
+      case TetrisPiecesTypes.Z           => 2.toByte
+      case TetrisPiecesTypes.T           => 3.toByte
+      case TetrisPiecesTypes.L           => 4.toByte
+      case TetrisPiecesTypes.L_REVERSED  => 5.toByte
+      case TetrisPiecesTypes.SQUARE      => 6.toByte
+      case TetrisPiecesTypes.I           => 7.toByte
     }
   }
 
   /*
   Get the TetrisPiece from the Byte representation
    */
-  def getPieceFromByte(byte: Byte): TetrisPieces.Value = {
+  def getPieceFromByte(byte: Byte): TetrisPiecesTypes.Value = {
     val bits5to8: Byte = ((byte & 0xE0) >> 5).toByte
     println(s"bits5to8 : ${bits5to8.toBinaryString}")
     bits5to8 match {
 
       // 000
-      case 0 => return TetrisPieces.NONE
+      case 0 => return TetrisPiecesTypes.NONE
 
       // 001
-      case 1 => return TetrisPieces.S
+      case 1 => return TetrisPiecesTypes.S
 
       // 010
-      case 2 => return TetrisPieces.Z
+      case 2 => return TetrisPiecesTypes.Z
 
       // 011
-      case 3 => return TetrisPieces.T
+      case 3 => return TetrisPiecesTypes.T
 
       // 100
-      case 4 => return TetrisPieces.L
+      case 4 => return TetrisPiecesTypes.L
 
       // 101
-      case 5 => return TetrisPieces.L_REVERSED
+      case 5 => return TetrisPiecesTypes.L_REVERSED
 
       // 110
-      case 6 => return TetrisPieces.SQUARE
+      case 6 => return TetrisPiecesTypes.SQUARE
 
       // 111
-      case 7 => return TetrisPieces.I
+      case 7 => return TetrisPiecesTypes.I
     }
-  }
-
-  def rotate(tetrisPiece: TetrisPieces.Value, orientation: TetrisPiecesOrientation.Value): Array[Array[Boolean]] = {
-    orientation match {
-      case TetrisPiecesOrientation.NORTH => return this.getRepresentation(tetrisPiece)
-      case TetrisPiecesOrientation.EAST => return this.rotateEast(tetrisPiece)
-      case TetrisPiecesOrientation.SOUTH => return this.rotateSouth(tetrisPiece)
-      case TetrisPiecesOrientation.WEST => return this.rotateWest(tetrisPiece)
-    }
-  }
-
-  /*
-   Rotate the TetrisPiece to 90° (east orientation)
-    */
-  def rotateEast(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
-    return this.getRepresentation(tetrisPiece).transpose.map(_.reverse)
-  }
-
-  /*
-  Rotate the TetrisPiece to 180° (south orientation)
-   */
-  def rotateSouth(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
-    return this.getRepresentation(tetrisPiece).transpose
-  }
-
-  /*
-  Rotate the TetrisPiece to 270° to the left (west orientation)
-   */
-  def rotateWest(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
-    return this.getRepresentation(tetrisPiece).map(_.reverse)
   }
 }
