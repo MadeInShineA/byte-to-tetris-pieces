@@ -9,8 +9,8 @@ object TetrisPieces extends Enumeration {
   /*
   Get the representation of the TetrisPiece as a 2 x 4 Array of Boolean
    */
-  def getRepresentation: Array[Array[Boolean]] = {
-    this match {
+  def getRepresentation(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
+    tetrisPiece match {
 
       /*
        Boolean representation of the NONE TetrisPiece
@@ -21,7 +21,7 @@ object TetrisPieces extends Enumeration {
       case NONE => return Array(
         Array(false, false, false),
         Array(false, false, false)
-        )
+      )
       /*
         Boolean representation of the S TetrisPiece
         Visualization:
@@ -40,7 +40,7 @@ object TetrisPieces extends Enumeration {
           0 1 1 0
       */
       case Z => return Array(
-        Array(true, true ,false, false),
+        Array(true, true, false, false),
         Array(false, true, true, false)
       )
 
@@ -96,7 +96,7 @@ object TetrisPieces extends Enumeration {
        */
       case I => return Array(
         Array(false, false, false, false),
-        Array(true, true ,true ,true)
+        Array(true, true, true, true)
       )
     }
   }
@@ -121,7 +121,8 @@ object TetrisPieces extends Enumeration {
   Get the TetrisPiece from the Byte representation
    */
   def getPieceFromByte(byte: Byte): TetrisPieces.Value = {
-    val bits5to8: Byte = (byte & 0x1F).toByte
+    val bits5to8: Byte = ((byte & 0xE0) >> 5).toByte
+    println(s"bits5to8 : ${bits5to8.toBinaryString}")
     bits5to8 match {
 
       // 000
@@ -150,33 +151,33 @@ object TetrisPieces extends Enumeration {
     }
   }
 
-  def rotate(orientation: TetrisPiecesOrientation.Value): Array[Array[Boolean]] = {
+  def rotate(tetrisPiece: TetrisPieces.Value, orientation: TetrisPiecesOrientation.Value): Array[Array[Boolean]] = {
     orientation match {
-      case TetrisPiecesOrientation.NORTH => return this.getRepresentation
-      case TetrisPiecesOrientation.EAST => return this.rotateEast
-      case TetrisPiecesOrientation.SOUTH => return this.rotateSouth
-      case TetrisPiecesOrientation.WEST => return this.rotateWest
+      case TetrisPiecesOrientation.NORTH => return this.getRepresentation(tetrisPiece)
+      case TetrisPiecesOrientation.EAST => return this.rotateEast(tetrisPiece)
+      case TetrisPiecesOrientation.SOUTH => return this.rotateSouth(tetrisPiece)
+      case TetrisPiecesOrientation.WEST => return this.rotateWest(tetrisPiece)
     }
   }
 
-/*
-  Rotate the TetrisPiece to 90° to the left (east orientation)
- */
-  def rotateEast: Array[Array[Boolean]] = {
-    return this.getRepresentation.transpose.map(_.reverse)
+  /*
+   Rotate the TetrisPiece to 90° (east orientation)
+    */
+  def rotateEast(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
+    return this.getRepresentation(tetrisPiece).transpose.map(_.reverse)
   }
 
   /*
   Rotate the TetrisPiece to 180° (south orientation)
    */
-  def rotateSouth: Array[Array[Boolean]] = {
-    return this.getRepresentation.transpose
+  def rotateSouth(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
+    return this.getRepresentation(tetrisPiece).transpose
   }
 
   /*
   Rotate the TetrisPiece to 270° to the left (west orientation)
    */
-  def rotateWest: Array[Array[Boolean]] = {
-    return this.getRepresentation.map(_.reverse)
+  def rotateWest(tetrisPiece: TetrisPieces.Value): Array[Array[Boolean]] = {
+    return this.getRepresentation(tetrisPiece).map(_.reverse)
   }
 }

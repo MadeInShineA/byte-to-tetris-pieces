@@ -13,7 +13,7 @@ object TetrisPiecesColor {
     new Color(255, 255, 255)
   )
   def getColorFromByte(byte: Byte): Color = {
-    val bite0To3: Byte = (byte & 0xF8).toByte
+    val bite0To3: Byte = (byte & 0x07).toByte
     COLORS(bite0To3)
   }
 }

@@ -16,7 +16,8 @@ object TetrisPiecesOrientation extends Enumeration {
   }
 
   def getOrientationFromByte(byte: Byte): TetrisPiecesOrientation.Value = {
-    val bite3To4: Byte = (byte & 0xE7).toByte
+    val bite3To4: Byte = ((byte & 0x18) << 3 >> 6).toByte
+    println(s"bite3To4 : ${bite3To4.toBinaryString}")
     bite3To4 match {
 
       // 00
