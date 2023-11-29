@@ -3,7 +3,7 @@ import java.awt.Color
 
 object TetrisPiecesColor {
   def getColorFromByte(byte: Byte): Color = {
-    val bite0To3: Byte = (byte & 0xF8).toByte
+    val bite0To3: Byte = (byte & 0x07).toByte
     bite0To3 match {
       case 0 => return new Color(0, 0, 0)
 
