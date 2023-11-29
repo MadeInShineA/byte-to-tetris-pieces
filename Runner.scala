@@ -1,16 +1,10 @@
 package ByteToTetrisPieces
-import hevs.graphics.FunGraphics
 
 object Runner extends App{
-  val display: FunGraphics = new FunGraphics(300, 300)
 
-  def byteToTetrisPiece(byte: Byte): TetrisPiece = {
-
-    // Get the information from the byte
-    val tetrisPieceType: TetrisPiecesTypes.Value = TetrisPiecesTypes.getPieceFromByte(byte)
-    val pieceOrientation: TetrisPiecesOrientation.Value = TetrisPiecesOrientation.getOrientationFromByte(byte)
-    val color: java.awt.Color = TetrisPiecesColor.getColorFromByte(byte)
-    val tetrisPiece = new TetrisPiece(tetrisPieceType,pieceOrientation,color)
-    return tetrisPiece
+  val s1: String = "Hello World! En Pièces Tetris"
+  val s1Bytes = s1.getBytes
+  for (b: Byte <- s1Bytes) {
+    println(TetrisPiece.byteToTetrisPieces(b))
   }
 }

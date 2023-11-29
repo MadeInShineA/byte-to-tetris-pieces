@@ -1,22 +1,12 @@
 package ByteToTetrisPieces
 
-object TetrisPiecesTypes extends Enumeration {
+object TetrisPiecesShapes extends Enumeration {
 
-  val NONE, S, Z, T, L, L_REVERSED, SQUARE, I = Value
+  val S, Z, T, L, L_REVERSED, SQUARE, I, FULL = Value
 
-  def getRepresentation(tetrisPiece: TetrisPiecesTypes.Value): Array[Array[Boolean]] = {
+  def getRepresentation(tetrisPiece: TetrisPiecesShapes.Value): Array[Array[Boolean]] = {
     tetrisPiece match {
 
-      /*
-       Boolean representation of the NONE TetrisPiece
-       Visualization:
-         0 0 0 0
-         0 0 0 0
-      */
-      case NONE => return Array(
-        Array(false, false, false),
-        Array(false, false, false)
-      )
       /*
         Boolean representation of the S TetrisPiece
         Visualization:
@@ -93,56 +83,66 @@ object TetrisPiecesTypes extends Enumeration {
         Array(false, false, false, false),
         Array(true, true, true, true)
       )
+
+      /*
+       Boolean representation of the FULL TetrisPiece
+       Visualization:
+         1 1 1 1
+         1 1 1 1
+      */
+      case FULL => return Array(
+        Array(false, false, false),
+        Array(false, false, false)
+      )
     }
   }
 
   /*
   Get the Byte representation of the TetrisPiece
    */
-  def getByte (tetrisPieces: TetrisPiecesTypes.Value): Byte = {
+  def getByte (tetrisPieces: TetrisPiecesShapes.Value): Byte = {
     tetrisPieces match {
-      case TetrisPiecesTypes.NONE        => 0.toByte
-      case TetrisPiecesTypes.S           => 1.toByte
-      case TetrisPiecesTypes.Z           => 2.toByte
-      case TetrisPiecesTypes.T           => 3.toByte
-      case TetrisPiecesTypes.L           => 4.toByte
-      case TetrisPiecesTypes.L_REVERSED  => 5.toByte
-      case TetrisPiecesTypes.SQUARE      => 6.toByte
-      case TetrisPiecesTypes.I           => 7.toByte
+      case TetrisPiecesShapes.S           => 0.toByte
+      case TetrisPiecesShapes.Z           => 1.toByte
+      case TetrisPiecesShapes.T           => 2.toByte
+      case TetrisPiecesShapes.L           => 3.toByte
+      case TetrisPiecesShapes.L_REVERSED  => 4.toByte
+      case TetrisPiecesShapes.SQUARE      => 5.toByte
+      case TetrisPiecesShapes.I           => 6.toByte
+      case TetrisPiecesShapes.FULL        => 7.toByte
     }
   }
 
   /*
   Get the TetrisPiece from the Byte representation
    */
-  def getPieceFromByte(byte: Byte): TetrisPiecesTypes.Value = {
+  def getPieceShapeFromByte(byte: Byte): TetrisPiecesShapes.Value = {
     val bits5to8: Byte = ((byte & 0xE0) >> 5).toByte
-    println(s"bits5to8 : ${bits5to8.toBinaryString}")
     bits5to8 match {
 
       // 000
-      case 0 => return TetrisPiecesTypes.NONE
+      case 0 => return TetrisPiecesShapes.S
 
       // 001
-      case 1 => return TetrisPiecesTypes.S
+      case 1 => return TetrisPiecesShapes.Z
 
       // 010
-      case 2 => return TetrisPiecesTypes.Z
+      case 2 => return TetrisPiecesShapes.T
 
       // 011
-      case 3 => return TetrisPiecesTypes.T
+      case 3 => return TetrisPiecesShapes.L
 
       // 100
-      case 4 => return TetrisPiecesTypes.L
+      case 4 => return TetrisPiecesShapes.L_REVERSED
 
       // 101
-      case 5 => return TetrisPiecesTypes.L_REVERSED
+      case 5 => return TetrisPiecesShapes.SQUARE
 
       // 110
-      case 6 => return TetrisPiecesTypes.SQUARE
+      case 6 => return TetrisPiecesShapes.I
 
       // 111
-      case 7 => return TetrisPiecesTypes.I
+      case 7 => return TetrisPiecesShapes.FULL
     }
   }
 }

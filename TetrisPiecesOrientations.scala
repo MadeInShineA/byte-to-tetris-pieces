@@ -1,6 +1,6 @@
 package ByteToTetrisPieces
 
-object TetrisPiecesOrientation extends Enumeration {
+object TetrisPiecesOrientations extends Enumeration {
   val NORTH, EAST, SOUTH, WEST = Value
 
   /*
@@ -15,9 +15,8 @@ object TetrisPiecesOrientation extends Enumeration {
     }
   }
 
-  def getOrientationFromByte(byte: Byte): TetrisPiecesOrientation.Value = {
+  def getOrientationFromByte(byte: Byte): TetrisPiecesOrientations.Value = {
     val bite3To4: Byte = ((byte & 0x18) << 3 >> 6).toByte
-    println(s"bite3To4 : ${bite3To4.toBinaryString}")
     bite3To4 match {
 
       // 00

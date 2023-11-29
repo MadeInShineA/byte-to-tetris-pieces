@@ -1,7 +1,7 @@
 package ByteToTetrisPieces
 import java.awt.Color
 
-object TetrisPiecesColor {
+object TetrisPiecesColors {
   private val COLORS: Array[Color] = Array(
     new Color(0, 0, 0),
     new Color(0, 0, 255),
